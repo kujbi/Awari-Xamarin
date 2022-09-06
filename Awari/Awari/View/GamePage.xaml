@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:view="clr-namespace:Awari.View"
+             xmlns:controls="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             x:Class="Awari.View.GamePage"
+             Title="Játék">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <!-- stílusok a vezérlőknek -->
+      <Style x:Key="MainLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="Micro" />
+        <Setter Property="Margin" Value="1" />
+      </Style>
+      <Style x:Key="MainButtonStyle" TargetType="Button">
+        <Setter Property="FontSize" Value="Micro" />
+        <Setter Property="BackgroundColor" Value="LightSteelBlue" />
+        <Setter Property="BorderRadius" Value="0" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="BorderColor" Value="LightSteelBlue" />
+        <Setter Property="Margin" Value="5" />
+            </Style>
+      <Style x:Key="FieldStyle" TargetType="Button">
+        <Setter Property="FontSize" Value="Micro" />
+        <Setter Property="Margin" Value="1" />
+        <Setter Property="BorderRadius" Value="0" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="MinimumWidthRequest" Value="30" />
+        <Setter Property="BackgroundColor" Value="{Binding BgColor}" />
+      </Style>
+      <Style x:Key="ScoreCupStyle" TargetType="Button">
+                <Setter Property="FontSize" Value="Micro" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="BorderRadius" Value="0" />
+                <Setter Property="BorderWidth" Value="0" />
+                <Setter Property="MinimumWidthRequest" Value="30" />
+                <Setter Property="BackgroundColor" Value="{Binding BgColor}" />
+      </Style>
+      </ResourceDictionary>
+  </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+
+        </Grid.ColumnDefinitions>
+        <!-- a gombokat a képernyő tetejére helyezzük -->
+        <Button Text="Új játék" Command="{Binding NewGameCommand}" Style="{StaticResource MainButtonStyle}" Grid.Row="0" Grid.Column="0" />
+        <Button Text="Beállítások" Command="{Binding ExitCommand}" Style="{StaticResource MainButtonStyle}" Grid.Row="0" Grid.Column="2" />
+
+        <controls:FlowListView Grid.Row="1" Grid.Column="0" FlowColumnCount="2" FlowItemsSource="{Binding ScoreBlue}" SeparatorVisibility="Default" Margin="40,20,0,0">
+            <!-- a játéktáblát egy sorfolytos listával valósítjuk meg -->
+            <controls:FlowListView.FlowColumnTemplate>
+                <DataTemplate>
+                    <!-- a rács elemei gombok lesznek -->
+                    <Button Text="{Binding Text}" Style="{StaticResource ScoreCupStyle}"  VerticalOptions="Center" HorizontalOptions="Center"  />
+                </DataTemplate>
+            </controls:FlowListView.FlowColumnTemplate>
+        </controls:FlowListView>
+
+        <controls:FlowListView Grid.Row="1" Grid.Column="1" FlowColumnCount="{Binding sCC}" FlowItemsSource="{Binding Scores}" SeparatorVisibility="None">
+            <!-- a játéktáblát egy sorfolytos listával valósítjuk meg -->
+            <controls:FlowListView.FlowColumnTemplate>
+                <DataTemplate>
+                    <!-- a rács elemei gombok lesznek -->
+                    <Button Command="{Binding ScoreClickCommand}" CommandParameter="{Binding X}" Text="{Binding Text}" Style="{StaticResource FieldStyle}" VerticalOptions="Center" HorizontalOptions="Center" />
+                </DataTemplate>
+            </controls:FlowListView.FlowColumnTemplate>
+        </controls:FlowListView>
+
+        <controls:FlowListView Grid.Row="1" Grid.Column="2" FlowColumnCount="2" FlowItemsSource="{Binding ScoreRed}" SeparatorVisibility="None"  VerticalOptions="Center" HorizontalOptions="Center" Margin="30,20,0,0">
+            <!-- a játéktáblát egy sorfolytos listával valósítjuk meg -->
+            <controls:FlowListView.FlowColumnTemplate>
+                <DataTemplate>
+                    <!-- a rács elemei gombok lesznek -->
+                    <Button Text="{Binding Text}" Style="{StaticResource FieldStyle}" VerticalOptions="Center" HorizontalOptions="Center"  />
+                </DataTemplate>
+            </controls:FlowListView.FlowColumnTemplate>
+        </controls:FlowListView>
+    </Grid>
+
+</ContentPage>
